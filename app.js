@@ -59,7 +59,7 @@ function save_data() {
     });
 }
 
-function update_progressbar () {
+function update_progressbar() {
     var length = ids.length;
     var num = parseInt(current / ids.length * 100)
 
@@ -74,10 +74,21 @@ next.addEventListener("click", function () {
 
 function update() {
     if (current < reasons.length) {
+        var checkNum = "";
+        var checkBox = $('.form-check > input');
+        for (var i = 0; i < checkBox.length; i++) {
+            //如果有1个被选中时（jquery1.6以上还可以用if(checkBox[i].prop('checked')) 去判断checkbox是否被选中）
+            if (checkBox[i].checked) {
+                checkNum += `${i + 1}`;
+                checkBox[i].checked = false;
+                // chboxVal.push(checkBox[i].value)//将被选择的值追加到
+            }
+        }
         scores[current] = $('ul').find('.active')[0].value;
         $('ul').find('.active')[0].classList.remove("active");
         docRef.doc(ids[current]).update({
             score: scores[current],
+            check: checkNum,
         }).then(function () {
             console.log("Saved !!");
         }).catch(function (error) {
@@ -86,9 +97,9 @@ function update() {
         current += 1;
         update_progressbar();
         if (current < reasons.length) {
-        reason.innerHTML = reasons[current];
-        info.innerHTML = infos[current];
-        meme.src = images[current];
+            reason.innerHTML = reasons[current];
+            info.innerHTML = infos[current];
+            meme.src = images[current];
         }
     }
 }
@@ -101,34 +112,60 @@ $(".page-item").click(function () {
 })
 
 function Check(func) {
-    var checkOne = false; //判断是否被选择条件
+    var quality = false; //判断是否被选择条件
+    var checkOne = false;
     // var chboxVal = [];                       //存入被选中项的值
-    var checkBox = $('ul').find('.active'); //获得得到所的复选框
+    var ansQuality = $('ul').find('.active'); //获得得到所的复选框
+    var checkBox = $('.form-check > input');
 
-    if (checkBox.length) checkOne = 1;
+    if (ansQuality.length) quality = 1;
 
-    if (checkOne) {
-        func();
-    } else {
-      $.alert({
-        title: "Warning",
-        content:
-          "You need to answer the evaluation question",
-        buttons: {
-          ok: {
-            text: "Yes",
-            btnClass: "btn-primary",
-          },
-        //   cancle: { text: "No", btnClass: "btn-danger" },
-        },
-      });
-      return false;
-      // checkBox[checkBox.length - 1].required = true;
-      // if (!checkBox[checkBox.length - 1].checkValidity()) {
-      //   checkBox[checkBox.length - 1].reportValidity();
-      // }
+    for (var i = 0; i < checkBox.length; i++) {
+        //如果有1个被选中时（jquery1.6以上还可以用if(checkBox[i].prop('checked')) 去判断checkbox是否被选中）
+        if (checkBox[i].checked) {
+            checkOne = true;
+            // chboxVal.push(checkBox[i].value)//将被选择的值追加到
+        }
     }
-  }
+
+    if (quality && checkOne) {
+        func();
+    } else if (quality) {
+        $.alert({
+            title: "Warning",
+            content:
+                "Are you sure that the explanation doesn't satisfy any criteria?",
+            buttons: {
+                ok: {
+                    text: "Yes",
+                    btnClass: "btn-primary",
+                    action: function () {
+                        func();
+                    }
+                },
+                cancle: { text: "No", btnClass: "btn-danger" },
+            },
+        });
+    } else {
+        $.alert({
+            title: "Warning",
+            content:
+                "You need to answer the evaluation question",
+            buttons: {
+                ok: {
+                    text: "Ok",
+                    btnClass: "btn-primary",
+                },
+                //   cancle: { text: "No", btnClass: "btn-danger" },
+            },
+        });
+        return false;
+        // checkBox[checkBox.length - 1].required = true;
+        // if (!checkBox[checkBox.length - 1].checkValidity()) {
+        //   checkBox[checkBox.length - 1].reportValidity();
+        // }
+    }
+}
 
 
 
