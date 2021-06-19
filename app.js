@@ -127,7 +127,7 @@ function Check(func) {
             // chboxVal.push(checkBox[i].value)//将被选择的值追加到
         }
     }
-
+    console.log(checkOne);
     if (quality && checkOne) {
         func();
     } else if (quality) {
