@@ -160,10 +160,6 @@ function Check(func) {
             },
         });
         return false;
-        // checkBox[checkBox.length - 1].required = true;
-        // if (!checkBox[checkBox.length - 1].checkValidity()) {
-        //   checkBox[checkBox.length - 1].reportValidity();
-        // }
     }
 }
 

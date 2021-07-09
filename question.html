@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html style="height: 90%">
+
+<head>
+  <title>HIT</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+  <script type="text/javascript" src="https://s3.amazonaws.com/mturk-public/externalHIT_v1.js">
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-20555581-2', 'auto');
+    ga('set', 'page', 'via-2.0.0.html');
+    ga('send', 'pageview');
+  </script>
+
+  <style>
+    /* input[type='radio'] { display: none; } */
+
+    .box {
+      position: relative;
+      border: 4px solid rgb(185, 185, 185);
+    }
+
+    .box::before {
+      content: attr(title);
+      font-size: 26px;
+      font-weight: bold;
+      position: absolute;
+      left: 22%;
+      transform: translateX(-50%);
+      -webkit-transform: translate(-50%, -50%);
+      padding: 0 10px;
+      background-color: #fff;
+    }
+
+
+    .h {
+      height: 100%;
+    }
+
+    .container1 {
+      width: 100%;
+      position: static;
+      float: none;
+      margin: 2px 2px 2px 2px;
+      padding: 10px 50px 10px 50px;
+    }
+
+    .text {
+      width: 100%;
+      height: auto;
+      position: relative;
+      float: none;
+      margin: 2px 2px 2px 2px;
+      padding: 10px 60px 1px 60px;
+    }
+
+    body {
+      min-width: 200px;
+      padding: 0;
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    input[type="text"] {
+      border: 1px solid #cccccc;
+      margin: 0.6rem 0;
+      padding: 0.2rem 0.4rem;
+    }
+
+    input[type="checkbox"]+span {
+      font-weight: lighter;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    textarea {
+      border: 1px solid #cccccc;
+      margin: 0.6rem 0;
+      padding: 0.2rem 0.4rem;
+    }
+  </style>
+  <style>
+    .borderline {
+      /* border: 1px orange solid; */
+      font-size: 20px;
+      color: blue;
+      border-radius: 6px;
+      margin-right: 100px;
+      padding: 5px 5px 5px 5px;
+      word-wrap: break-word;
+      word-break: normal;
+    }
+
+    .problem1 {
+      display: flex;
+      flex-flow: row wrap;
+    }
+
+    .problem1>div {
+      flex: 1;
+      padding: 1rem;
+      padding-top: 0;
+      user-select: none;
+    }
+
+    input[type="radio"] {
+      /* display: none; */
+      opacity: 0;
+    }
+
+    input[type="radio"]:not(:disabled)~label {
+      cursor: pointer;
+    }
+
+    .problem1_label {
+      /* height: 100%; */
+      display: block;
+      background: white;
+      border: 2px solid hsla(150, 75%, 50%, 1);
+      border-radius: 20px;
+      padding-top: 1rem;
+      margin-top: 1rem;
+      text-align: center;
+      box-shadow: 0px 3px 10px -2px hsla(150, 5%, 65%, 0.5);
+      position: relative;
+    }
+
+    input[type="radio"]:checked+label {
+      background: hsla(150, 75%, 50%, 1);
+      color: hsla(215, 0%, 100%, 1);
+    }
+
+    /* input[type="radio"]#control_05:checked+label {
+      background: orange;
+      border-color: orange;
+    }
+
+    input[type="radio"]#control_02:checked+label {
+      background: gray;
+      border-color: gray;
+    } */
+  </style>
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<body onload="" style="height: 70%">
+  <form style="height: 100%" name="mturk_form" method="post" id="mturk_form"
+    action="https://www.mturk.com/mturk/externalSubmit" onsubmit="return Check('rubric')">
+    <input type="hidden" value="" name="assignmentId" id="assignmentId" />
+
+    <meta content="width=device-width,initial-scale=1" name="viewport" />
+    <section id="instruction">
+      <!-- <section  id="Sentiment"></section>Instructions (collapsible) -->
+      <div class="row">
+        <div class="col-xs-12 col-md-1"></div>
+        <div class="col-xs-12 col-md-10">
+          <div class="panel panel-primary">
+            <!-- WARNING: the ids "collapseTrigger" and "instructionBody" are being used to enable expand/collapse feature --><a
+              class="panel-heading" href="javascript:void(0);" id="collapseTrigger">
+              <strong>Instructions</strong>
+              <span class="collapse-text">(Click to expand)</span>
+            </a>
+            <div class="panel-body" id="instructionBody">
+              <strong style="font-size: 20px">
+                In this task, you need to read the meme and fill out two questionnaire.
+                <!-- 
+                This is a four-stage task. In the first 3 stages, you need to
+                rate the hatefulness of the content. Finally, you have to
+                explain why the content is hateful. -->
+                <!--
+                In this task, you need to determine whether the image with the
+                text causes negative feelings (e.g., uncomfortable, harmful,
+                hateful) and explain why. -->
+              </strong>
+              <br> <br>
+              <strong style="font-size: 20px"> You can only do this HIT once.</strong>
+              <!-- <br />
+              <a style="font-size: 24px;"
+                href="https://mturk-meme.s3.us-east-2.amazonaws.com/example/generation_example2.png" target="_blank">
+                You can see an example here.
+              </a>
+              <br /><br>
+              <strong style="font-size: 18px; color: red">
+                The good answer(s) will get the bonus.
+              </strong> -->
+              <br /><br />
+              <strong style="font-size: 20px; background-color: yellow">Warning: The image may contain offensive or
+                harmful content.</strong><br />
+              <strong style="font-size: 20px; background-color: yellow">Disclaimer: The content in the image does not
+                reflect the
+                requester's personal opinion.</strong><br />
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- End instructions -->
+    </section>
+
+    <section class="h container1" id="Sentiment">
+      <!-- <div class="h row" id="app-2"> -->
+      <div class="h" id="app-2">
+        <div class="col-xs-12 col-sm-5 content" style="margin-left: 6%; padding-left: 0px; padding-right: 0px">
+          <div class="h" v-show="show === 0 | show === 2">
+            <div style="justify-content: center; display: flex; height: 100%">
+              <img style="max-width: 100%; max-height: 600px"
+                src=https://mturk-meme.s3.us-east-2.amazonaws.com/special/56098.png />
+              <!-- <img style="max-width: 100%; max-height: 600px" src="${meme}" /> -->
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-5 fields">
+          <div style="display: flex; margin-left: 5%;">
+          </div>
+          <div style="display: flex; align-items: center; margin-left: 5%;">
+            <div class="form-group">
+              <div class="h" v-show="show === 0">
+                <div id="target_div" style="padding-left: 10px; padding-top: 20px;">
+                  <h4 style="font-size: 22px; font-weight: bold;">Please read the meme on the left, then answer the
+                    question.</h4>
+                  <hr>
+                  <p style="font-size: 22px;">Do you think this meme is hateful?</p>
+                  <div class="col-xs-12 col-sm-12 content">
+                    <section class="problem1 col-xs-12 col-sm-8 content">
+                      <div>
+                        <input type="radio" id="control_05" name="select1" value="1">
+                        <label class="problem1_label" for="control_05">
+                          <p style="font-size: 20px;">Yes</p>
+                        </label>
+                      </div>
+                      <div>
+                        <input type="radio" id="control_01" name="select1" value="0" required>
+                        <label class="problem1_label" for="control_01">
+                          <p style="font-size: 20px;">No</p>
+                        </label>
+                      </div>
+                      <div>
+                        <input type="radio" id="control_02" name="select1" value="-1" required>
+                        <label class="problem1_label" for="control_02">
+                          <p style="font-size: 20px;">Not sure</p>
+                        </label>
+                      </div>
+                    </section>
+                  </div>
+                </div>
+              </div>
+              <div class="h" v-show="show === 2">
+                <div id="target_div" style="padding-left: 10px; padding-top: 20px;">
+                  <h4 style="font-size: 22px; font-weight: bold;">Please read the following meme explanation generated
+                    by the system.</h4>
+                  <hr>
+                  <h3 class="unselect"> The meme on the left is hateful because </h3>
+                  <p name="target" class="borderline">It is making fun of the dead Jewish people during the World War, and it is making light of the fact that Adolf Hitler killed millions of Jewish people under his regime.</p>
+                  <!-- <p name="target" class="borderline">${reason}</p> -->
+                  <h3 class="unselect"> based on the information below </h3>
+                  <p name="target" class="borderline">The man shown is Adolf Hitler with the caption "I said 'a glass of juice'", which of course is insinuating that he misspoke of saying glass of juice, instead of gas the Jews.</p>
+                  <!-- <p name="target" class="borderline">${info}</p> -->
+                  <hr>
+                  <!-- <p style="font-size: 22px;">Do you agree with this explanation? and why?</p>
+                  <textarea required name="feel" id="feel" style="border-radius: 10px;" rows="3" cols="70%"></textarea> -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center;" class="h" v-show="show === 1">
+          <div id="target_div" style="padding-left: 10px; padding-top: 20px;">
+            <h4 style="font-size: 22px; font-weight: bold;">In this part, you need to fill out short questionnaire</h4>
+            <hr>
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSccvKNqlF_rpaClMPJ9hXE3Qdb65t46Y8rgGiwwj8Ci3I7nwQ/viewform?embedded=true"
+              width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            <!-- <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSftplrEqeGKNkB1_KOyDAvXh3CgBXC2TAbbxI-K-DHiUkhBjQ/viewform?embedded=true"
+              width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> -->
+            <hr>
+            <div v-show="show === 1">
+              <input type="button" onclick="Check()" id="preButton" class="btn btn-primary" value="Next" />
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center;" class="h" v-show="show === 3">
+          <div id="target_div" style="padding-left: 10px; padding-top: 20px;">
+            <h4 style="font-size: 22px; font-weight: bold;">Finally, you need to fill out the questionnaire</h4>
+            <hr>
+            <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSezEU6OYPQM_auSShrmjpDHqpcsmCv4Z40JcO8oGOLIFwdhQg/viewform?embedded=true"
+              width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            <!-- <iframe
+              src="https://docs.google.com/forms/d/e/1FAIpQLSfzx36xTbtRJiqTMEtWJLH_foCYeXXQ4kXvlz3MNcLtoWMjpQ/viewform?embedded=true"
+              width="100%" height="600" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe> -->
+            <hr>
+            <div v-show="show === 3">
+              <input type="submit" id="submitButton" class="btn btn-primary" value="Submit" />
+            </div>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 content" style="display: flex;  justify-content: center;">
+          <div v-show="show === 0">
+            <input type="button" onclick="gotop()" id="NextButton" class="btn btn-primary" value="Next" />
+          </div>
+          <div v-show="show === 2">
+            <input type="button" id="ExplainButton" class="btn btn-primary" value="Next" />
+          </div>
+          <!-- <div v-show="show === 2">
+            <input type="submit" id="submitButton" class="btn btn-primary" value="Submit" />
+          </div> -->
+        </div>
+      </div>
+
+      <!-- <link rel="stylesheet"
+        href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" /> -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <!-- <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script> -->
+      <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+      <script>
+        setInterval(function xxx() {
+          // $("#ExplainButton")[0].disabled = true;
+          // console.log(1111);
+        }, 10000)
+
+        var tap = 0;
+
+        //計時器60秒
+        function timeInterval() {
+          if (tap === 0) {
+            $("#ExplainButton")[0].value = "(" + 30 + ")";
+            var timeSec = 29;
+            var timeStr = '';
+            tap = 1;
+            var codeTime = setInterval(function Internal() {
+              if (timeSec == 0) {
+                $("#ExplainButton")[0].value = "Next";
+                $("#ExplainButton")[0].disabled = false;
+                clearInterval(codeTime);
+                tap = 0;
+                return;
+              }
+              else {
+                $("#ExplainButton")[0].disabled = true;
+              }
+              timeStr = "(" + timeSec + ")";
+              $("#ExplainButton")[0].value = timeStr;
+              timeSec--;
+              console.log(timeStr);
+              console.log(timeSec);
+            }, 1000);
+          }
+        }
+
+
+        function gotop() {
+          $("html,body").animate(
+            {
+              scrollTop: 0,
+            },
+            200
+          );
+        }
+
+        function Check(name) {
+          var checkOne = false; //判断是否被选择条件
+          // var chboxVal = [];                       //存入被选中项的值
+          var checkBox = $(`input[name = ${name}]`); //获得得到所的复选框
+
+          for (var i = 0; i < checkBox.length; i++) {
+            //如果有1个被选中时（jquery1.6以上还可以用if(checkBox[i].prop('checked')) 去判断checkbox是否被选中）
+            if (checkBox[i].checked) {
+              checkOne = true;
+              // chboxVal.push(checkBox[i].value)//将被选择的值追加到
+            }
+          }
+
+          if (checkOne) {
+            if (app2.show === 0) {
+              app2.show += 1;
+            }
+          } else {
+            $.alert({
+              title: "Warning",
+              content:
+                "Are you sure you have filled out the questionnaire?",
+              buttons: {
+                ok: {
+                  text: "Yes",
+                  btnClass: "btn-primary",
+                  action: function () {
+                    if (app2.show <= 2) {
+                      app2.show += 1;
+                    } else {
+                      form.submit();
+                    }
+
+                    if (app2.show == 2) {
+                      timeInterval();
+                    }
+                  },
+                },
+                cancle: { text: "No", btnClass: "btn-danger" },
+              },
+            });
+            return false;
+            // checkBox[checkBox.length - 1].required = true;
+            // if (!checkBox[checkBox.length - 1].checkValidity()) {
+            //   checkBox[checkBox.length - 1].reportValidity();
+            // }
+          }
+        }
+      </script>
+
+      <script>
+        var app2 = new Vue({
+          el: "#app-2",
+          data() {
+            return {
+              show: 0,
+              show1: 0,
+            };
+          },
+        });
+
+        function checkpage(page1) {
+          if (!document.querySelector(page1).checkValidity()) {
+            document.querySelector(page1).reportValidity();
+          } else {
+            app2.show += 1;
+          }
+        }
+
+        $("#NextButton").click(function () {
+          var reason = $("input[name='select1']")[0];
+          // var info = $("#info")[0];
+          if (!reason.checkValidity()) {
+            reason.reportValidity();
+            // } else if (!info.checkValidity()) {
+            //   info.reportValidity();
+          } else {
+            app2.show += 1;
+          }
+        });
+
+        $("#ExplainButton").click(function () {
+          // var reason = $("#feel")[0];
+          // // var info = $("#info")[0];
+          // if (!reason.checkValidity()) {
+          //   reason.reportValidity();
+          // } else {
+          //   gotop();
+          //   app2.show += 1;
+          // }
+          // timeInterval();
+          app2.show += 1;
+        });
+
+      </script>
+
+      <script src="//uniqueturker.myleott.com/lib.js" type="text/javascript"></script>
+      <script type="text/javascript">
+        (function () {
+          var ut_id = "3bd9b2bcaa9709dc78f9dd03a1ade3e3";
+          if (UTWorkerLimitReached(ut_id)) {
+            document.getElementById('mturk_form').style.display = 'none';
+            document.getElementsByTagName('body')[0].innerHTML = "You have already completed the maximum number of HITs allowed by this requester. Please click 'Return HIT' to avoid any impact on your approval rating.";
+          }
+        })();
+      </script>
+
+
+
+      <!-- <script type="text/javascript">
+        function turkGetParam(name) {
+          var regexS = "[\?&]" + name + "=([^&#]*)";
+          var regex = new RegExp(regexS);
+          var tmpURL = fullurl;
+          var results = regex.exec(tmpURL);
+          if (results == null) {
+            return "";
+          } else {
+            return results[1];
+          }
+        }
+
+        /* THIS IS THE LINE TO CAPTURE THE ACTUAL URL: */
+        var fullurl = window.location.href;
+
+        /* ASSIGNS THE URL PARAMETERS TO JAVASCRIPT VARIABLES */
+        var assign = turkGetParam('assignmentId');
+        // var hit = turkGetParam('hitId');
+        // var worker = turkGetParam('workerId');
+
+        /* WHAT TO DO IF THE WORKER IS PREVIEWING THE HIT: */
+        // if (assign == "ASSIGNMENT_ID_NOT_AVAILABLE") {
+        //   app2.show = 3;
+        //   console.log(app2.show);
+        // }
+        // else {
+        //   app2.show = 0;
+        //   // hide_instruction();
+        //   // console.log(hide_instruction());
+        // }
+
+        (function () {
+          var assignmentId = turkGetParam('assignmentId', '');
+          if (assignmentId != '' && assignmentId != 'ASSIGNMENT_ID_NOT_AVAILABLE') {
+            var workerId = turkGetParam('workerId', '');
+            var url = 'http://YOUR_URL/?workerId=' + workerId;
+            var request = new XMLHttpRequest();
+            request.open('GET', url, false);
+            request.send();
+            if (request.responseText != '1') {
+              document.getElementById('mturk_form').style.display = 'none';
+              document.getElementsByTagName('body')[0].innerHTML = "You have already completed the maximum number of HITs allowed by this requester. Please click 'Return HIT' to avoid any impact on your approval rating.";
+            }
+          }
+        })();
+      </script> -->
+
+
+
+      <!-- END: Contents of file: via.js-->
+    </section>
+    <!-- End Categorization Layout -->
+    <!-- External CSS references -->
+    <link crossorigin="anonymous" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" rel="stylesheet" />
+    <!-- Open internal style sheet -->
+    <style type="text/css">
+      #collapseTrigger {
+        color: #fff;
+        display: block;
+        text-decoration: none;
+      }
+
+      #submitButton {
+        white-space: normal;
+      }
+
+      #instructionBody table {
+        font-size: 14px;
+        margin-top: 10px;
+      }
+
+      #instructionBody table caption {
+        text-align: left;
+        padding: 0 0 5px 0;
+      }
+
+      #Inputs {
+        display: block;
+        margin-top: 10px;
+      }
+
+      .content {
+        margin-bottom: 15px;
+      }
+
+      .radio:first-of-type {
+        margin-top: -5px;
+      }
+    </style>
+    <!-- Close internal style sheet -->
+    <!-- External JS references -->
+    <!-- <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+      integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script> -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"></script>
+    <!-- Open internal javascript -->
+    <script>
+      $(document).ready(function () {
+        // Instructions expand/collapse
+        var content = $("#instructionBody");
+        var trigger = $("#collapseTrigger");
+        // content.hide();
+        $(".collapse-text").text("(Click to collapse)");
+        trigger.click(function () {
+          content.toggle();
+          var isVisible = content.is(":visible");
+          if (isVisible) {
+            $(".collapse-text").text("(Click to collapse)");
+          } else {
+            $(".collapse-text").text("(Click to expand)");
+          }
+        });
+      });
+
+      function hide_instruction() {
+        var content = $("#instructionBody");
+        var isVisible = content.is(":visible");
+        if (isVisible) {
+          content.toggle();
+          $(".collapse-text").text("(Click to expand)");
+        }
+      }
+    </script>
+    <!-- Close internal javascript -->
+  </form>
+  <script language="Javascript">
+    turkSetAssignmentID();
+  </script>
+</body>
+
+</html>
