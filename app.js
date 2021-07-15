@@ -22,7 +22,8 @@ const bar = document.getElementById("progressbar");
 
 
 const docRef = db.collection("meme");
-var query = docRef.where("score", "==", 0).limit(3);
+var query = docRef.where("score", "==", 0);
+// var query = docRef.where("score", "==", 0).limit(3);
 
 function init() {
     query.get().then(function (querySnapshot) {
@@ -32,7 +33,15 @@ function init() {
         //     console.log(doc.id, " => ", doc.data());
         // });
         reason.innerHTML = data.docs[0].data()["reason"];
-        info.innerHTML = data.docs[0].data()["info"];
+        if(data.docs[0].data()["info"] !== "") {
+            info.innerHTML = data.docs[0].data()["info"];
+            $("#info")[0].hidden = false;
+            $("#info_head")[0].hidden = false;
+        }
+        else {
+            $("#info")[0].hidden = true;
+            $("#info_head")[0].hidden = true;
+        }
         meme.src = data.docs[0].data()["image"];
         save_data();
     }).catch(function (error) {
