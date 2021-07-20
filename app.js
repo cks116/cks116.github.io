@@ -33,15 +33,16 @@ function init() {
         //     console.log(doc.id, " => ", doc.data());
         // });
         reason.innerHTML = data.docs[0].data()["reason"];
-        if(data.docs[0].data()["info"] !== "") {
-            info.innerHTML = data.docs[0].data()["info"];
-            $("#info")[0].hidden = false;
-            $("#info_head")[0].hidden = false;
-        }
-        else {
-            $("#info")[0].hidden = true;
-            $("#info_head")[0].hidden = true;
-        }
+        // if(data.docs[0].data()["info"] !== "") {
+        //     info.innerHTML = data.docs[0].data()["info"];
+        //     $("#info").show();
+        //     $("#info_head").show();
+        // }
+        // else {
+        //     $("#info").hide();
+        //     $("#info_head").hide();
+        // }
+        info.innerHTML = data.docs[0].data()["info"];
         meme.src = data.docs[0].data()["image"];
         save_data();
     }).catch(function (error) {
@@ -107,7 +108,16 @@ function update() {
         update_progressbar();
         if (current < reasons.length) {
             reason.innerHTML = reasons[current];
-            info.innerHTML = infos[current];
+            // info.innerHTML = infos[current];
+            if(infos[current] !== "") {
+                info.innerHTML = infos[current];
+                $("#info").show();
+                $("#info_head").show();
+            }
+            else {
+                $("#info").hide();
+                $("#info_head").hide();
+            }
             meme.src = images[current];
         }
     }
