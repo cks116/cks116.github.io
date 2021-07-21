@@ -33,16 +33,16 @@ function init() {
         //     console.log(doc.id, " => ", doc.data());
         // });
         reason.innerHTML = data.docs[0].data()["reason"];
-        // if(data.docs[0].data()["info"] !== "") {
-        //     info.innerHTML = data.docs[0].data()["info"];
-        //     $("#info").show();
-        //     $("#info_head").show();
-        // }
-        // else {
-        //     $("#info").hide();
-        //     $("#info_head").hide();
-        // }
-        info.innerHTML = data.docs[0].data()["info"];
+        if(data.docs[0].data()["info"] !== "") {
+            info.innerHTML = data.docs[0].data()["info"];
+            $("#info").show();
+            $("#info_head").show();
+        }
+        else {
+            $("#info").hide();
+            $("#info_head").hide();
+        }
+        // info.innerHTML = data.docs[0].data()["info"];
         meme.src = data.docs[0].data()["image"];
         save_data();
     }).catch(function (error) {
