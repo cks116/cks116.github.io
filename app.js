@@ -21,7 +21,7 @@ const next = document.querySelector("#nextButton");
 const bar = document.getElementById("progressbar");
 
 
-const docRef = db.collection("meme");
+const docRef = db.collection("meme_v2");
 var query = docRef.where("score", "==", 0);
 // var query = docRef.where("score", "==", 0).limit(3);
 
